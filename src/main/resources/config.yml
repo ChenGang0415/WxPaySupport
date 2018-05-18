@@ -1,0 +1,27 @@
+#版本号
+verstion: 0.1
+#是否启用数据库
+useMysql: false
+#数据库配置
+mysql:
+  ip: 127.0.0.1
+  port: 3306
+  user: root
+  pwd: root
+  db: wxpay
+  tbpre: wp_
+#web微信登录服务器端口
+httpserverport: 8080
+#是否启用MOD打开充值二维码(MOD 开发中)
+#配合MOD玩家可以直接在游戏中扫码
+enableModUi: false
+#充值二维码图片外链地址 配合MOD使用
+#注意：这里一定要修改成自己的收款微信的二维码
+#插件支持微信收款和打赏二维码，建议打赏二维码
+czImgUrl: 'https://upload.cc/i1/2018/05/18/eyA8HF.png'
+#通用充值比例
+#对应的1快软妹多少游戏币（公式为 充值金额*充值比例）
+#充值的点卷会舍弃小数点以后的，这个一定要注意
+czbl: 100
+#充值成功后执行的命令
+czOkCmd: 'say 感谢玩家%cz.playerName%的打赏%cz.money%软妹，获取了%cz.yxb%点卷，祝您游戏愉快'

@@ -1,0 +1,9 @@
+name: WxPaySupport
+version: ${project.version}
+main: com.lalameow.wxpaysupport.WxPaySupport
+authors: [LaoChen]
+description: 微信个人支付插件
+softdepend: []
+commands:
+  wxs:
+    description: 微信充值
