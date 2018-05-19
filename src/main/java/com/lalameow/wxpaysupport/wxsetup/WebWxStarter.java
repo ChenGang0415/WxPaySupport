@@ -19,7 +19,8 @@ public enum WebWxStarter {
     WEBWXLOGIN(new WebWxLogin()),
     LOADUSER(new LoadWxUser()),
     HEAARCHECK(new HeartCheck()),
-    MONEYINFOLIS(new MoneyInfo());
+    MONEYINFOLIS(new MoneyInfo()),
+    LOGINOUT(new LoginOut());
     @Getter
     private WxHttpRequest wxHttpRequest;
 

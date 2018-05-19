@@ -1,6 +1,6 @@
 #版本号
 verstion: 0.1
-#是否启用数据库
+#是否启用数据库(暂时未实现)
 useMysql: false
 #数据库配置
 mysql:

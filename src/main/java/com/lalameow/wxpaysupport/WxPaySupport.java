@@ -2,13 +2,16 @@ package com.lalameow.wxpaysupport;
 
 import com.lalameow.wxpaysupport.command.WxAboutCommand;
 import com.lalameow.wxpaysupport.config.MainConfig;
+import com.lalameow.wxpaysupport.exception.WxRequestException;
 import com.lalameow.wxpaysupport.log.RechargeLog;
 import com.lalameow.wxpaysupport.log.filelog.RechargeFileLog;
 import com.lalameow.wxpaysupport.pojo.RechargeRecord;
 import com.lalameow.wxpaysupport.wxsetup.RechargeQueueHandler;
+import com.lalameow.wxpaysupport.wxsetup.WebWxStarter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public final class WxPaySupport extends JavaPlugin {
@@ -33,5 +36,10 @@ public final class WxPaySupport extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        try {
+            WebWxStarter.LOGINOUT.getWxHttpRequest().requestdata();
+        } catch (IOException | WxRequestException e) {
+            e.printStackTrace();
+        }
     }
 }
