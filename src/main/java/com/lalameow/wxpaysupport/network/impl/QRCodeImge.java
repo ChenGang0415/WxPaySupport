@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 
 /**
  * Created with IntelliJ IDEA.
@@ -47,14 +48,22 @@ public class QRCodeImge implements WxHttpRequest {
             CloseableHttpResponse response = httpclient.execute(httpGet);
             HttpEntity httpEntity = response.getEntity();
             byte[] bytes = EntityUtils.toByteArray(httpEntity);
-            if(MainConfig.enableQrSever){
-                genQrImg(bytes);
-            }else {
-                String text=QRCodeUtils.decode(bytes);
-                String qrstr=QRCodeUtils.generateQR(text,1,1);
-                WxPaySupport.plugin.getLogger().info("\n"+qrstr);
+            switch (MainConfig.qrshowType){
+                case 0:
+                    genQrImgFile(bytes);
+                    break;
+                case 1:
+                    genQrImg(bytes);
+                    break;
+                case 2:
+                    String text=QRCodeUtils.decode(bytes);
+                    String qrstr=QRCodeUtils.generateQR(text,1,1);
+                    WxPaySupport.plugin.getLogger().info("\n"+qrstr);
+                    break;
+                case 3:
+                    System.out.println("\n\t"+genWebMc(bytes));
+                    break;
             }
-            genQrImgFile(bytes);
             response.close();
             httpclient.close();
         }else {
@@ -79,5 +88,10 @@ public class QRCodeImge implements WxHttpRequest {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+    }
+    private String  genWebMc(byte[] imgdata){
+        String qrimg="data:image/png;base64,"+ Base64.getEncoder().encodeToString(imgdata);
+        return "%lt%div%gt%%lt%img%space%src="+qrimg+"%gt%%lt%/img%gt% %lt%/div%gt%";
+       // return "<div><img src='"+qrimg+"'/></div>";
     }
 }

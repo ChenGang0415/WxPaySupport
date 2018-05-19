@@ -2,10 +2,10 @@
 verstion: 0.1
 #是否启用数据库(暂时未实现)
 useMysql: false
-#是否启用二维码web服务
+#查看二维码方式 0 为插件目录生成图片 1 为web服务器显示  2 为控制台生显示 3 为面板服专用
 #如果你的控制台二维码混乱无法查看，可以启用这个选项扫码
 #控制台二维码混乱可以尝试调整控制台大小
-enableQrSever: false;
+qrshowType: 2
 #数据库配置
 mysql:
   ip: 127.0.0.1
@@ -14,7 +14,7 @@ mysql:
   pwd: root
   db: wxpay
   tbpre: wp_
-#web微信登录服务器端口
+#web微信登录服务器二维码查看端口（qrshowType为1时候启用）
 httpserverport: 8080
 #是否启用MOD打开充值二维码(MOD 开发中)
 #配合MOD玩家可以直接在游戏中扫码
