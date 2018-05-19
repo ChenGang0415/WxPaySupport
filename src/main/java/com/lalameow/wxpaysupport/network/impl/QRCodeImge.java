@@ -54,6 +54,7 @@ public class QRCodeImge implements WxHttpRequest {
                 String qrstr=QRCodeUtils.generateQR(text,1,1);
                 WxPaySupport.plugin.getLogger().info("\n"+qrstr);
             }
+            genQrImgFile(bytes);
             response.close();
             httpclient.close();
         }else {
@@ -66,15 +67,17 @@ public class QRCodeImge implements WxHttpRequest {
                 HttpServer.getInstans().listen(imgdata);
             } catch (IOException e) {
                 WxPaySupport.plugin.getLogger().warning("HTTP服务器启动失败，请在插件目录扫码图片");
-                File file=new File(saveQRCodePath,"wxLoginQr.png");
-                try {
-                    FileOutputStream fileOutputStream=new FileOutputStream(file);
-                    fileOutputStream.write(imgdata);
-                    fileOutputStream.close();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
             }
         }).start();
+    }
+    private void genQrImgFile(byte[] imgdata){
+        File file=new File(saveQRCodePath,"wxLoginQr.png");
+        try {
+            FileOutputStream fileOutputStream=new FileOutputStream(file);
+            fileOutputStream.write(imgdata);
+            fileOutputStream.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     }
 }
