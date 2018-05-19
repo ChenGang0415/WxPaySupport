@@ -29,6 +29,7 @@ public class MainConfig extends AbstractConfig{
     public static String  czImgUrl;
     public static int     czbl;
     public static String  czOkCmd;
+    public static boolean enableQrSever;
 
 
     public MainConfig() {
@@ -62,5 +63,6 @@ public class MainConfig extends AbstractConfig{
         czImgUrl=this.getConfigFile().getString("czImgUrl");
         czbl=this.getConfigFile().getInt("czbl");
         czOkCmd=this.getConfigFile().getString("czOkCmd");
+        enableQrSever=this.getConfigFile().getBoolean("enableQrSever");
     }
 }

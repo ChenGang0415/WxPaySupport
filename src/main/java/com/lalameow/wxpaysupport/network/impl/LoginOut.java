@@ -20,6 +20,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,25 +35,34 @@ import java.util.List;
 public class LoginOut implements WxHttpRequest {
     @Override
     public void requestdata() throws IOException, WxRequestException {
-        CookieStore cookieStore = new BasicCookieStore();
-        CloseableHttpClient httpclient = HttpClients.custom().setDefaultCookieStore(cookieStore).build();
-        HttpPost httpPost = new HttpPost(buildurl());
-        List<NameValuePair> sumitData=new ArrayList<>();
-        BasicNameValuePair dataOne=new BasicNameValuePair("sid",WxParmar.WXSID);
-        BasicNameValuePair dataTwo=new BasicNameValuePair("uin",WxParmar.WXUIN);
-        sumitData.add(dataOne);
-        sumitData.add(dataTwo);
-        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(sumitData,"utf-8");
-        httpPost.setEntity(entity);
-        CloseableHttpResponse response = httpclient.execute(httpPost);
-        WxPaySupport.plugin.getLogger().info("Web微信已经退出！");
-        response.close();
-        httpclient.close();
+        if(WxParmar.SYNCKEY!=null) {
+            CookieStore cookieStore = new BasicCookieStore();
+            CloseableHttpClient httpclient = HttpClients.custom().setDefaultCookieStore(cookieStore).build();
+            HttpPost httpPost = new HttpPost(buildurl());
+            List<NameValuePair> sumitData = new ArrayList<>();
+            BasicNameValuePair dataOne = new BasicNameValuePair("sid", WxParmar.WXSID);
+            BasicNameValuePair dataTwo = new BasicNameValuePair("uin", WxParmar.WXUIN);
+            sumitData.add(dataOne);
+            sumitData.add(dataTwo);
+            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(sumitData, "utf-8");
+            httpPost.setEntity(entity);
+            CloseableHttpResponse response = httpclient.execute(httpPost);
+            String content=EntityUtils.toString(response.getEntity());
+            System.out.println("content = " + content);
+            WxPaySupport.plugin.getLogger().info("Web微信已经退出！");
+            response.close();
+            httpclient.close();
+        }
     }
     private String buildurl(){
-        StringBuilder builder=new StringBuilder();
-        builder.append("https://").append(WxParmar.DomainURL);
-        builder.append("/cgi-bin/mmwebwx-bin/webwxlogout?redirect=1&type=0&skey=").append(WxParmar.SYNCKEY);
-        return builder.toString();
+        try {
+            StringBuilder builder=new StringBuilder();
+            builder.append("https://").append(WxParmar.DomainURL);
+            builder.append("/cgi-bin/mmwebwx-bin/webwxlogout?redirect=1&type=0&skey=").append(URLEncoder.encode(WxParmar.SYNCKEY,"utf-8"));
+            return builder.toString();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

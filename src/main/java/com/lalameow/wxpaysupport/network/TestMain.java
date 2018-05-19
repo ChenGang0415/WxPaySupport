@@ -24,7 +24,7 @@ public class TestMain {
         MoneyInfo moneyInfo=new MoneyInfo();
         qrCodeUuid.requestdata();
         qrCodeImge.requestdata();
-        while (WxParmar.LOGINURL==null){
+        /*while (WxParmar.LOGINURL==null){
             try {
                 loginVaild.requestdata();
                 Thread.sleep(5000);
@@ -39,6 +39,6 @@ public class TestMain {
             heartCheck.requestdata();
             moneyInfo.requestdata();
             Thread.sleep(10000);
-        }
+        }*/
     }
 }

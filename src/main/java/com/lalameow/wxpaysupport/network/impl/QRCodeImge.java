@@ -1,10 +1,12 @@
 package com.lalameow.wxpaysupport.network.impl;
 
 import com.lalameow.wxpaysupport.WxPaySupport;
+import com.lalameow.wxpaysupport.config.MainConfig;
 import com.lalameow.wxpaysupport.network.HttpServer;
 import com.lalameow.wxpaysupport.network.WxHttpRequest;
 import com.lalameow.wxpaysupport.network.WxParmar;
 import com.lalameow.wxpaysupport.exception.WxRequestException;
+import com.lalameow.wxpaysupport.network.uitls.QRCodeUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -45,7 +47,13 @@ public class QRCodeImge implements WxHttpRequest {
             CloseableHttpResponse response = httpclient.execute(httpGet);
             HttpEntity httpEntity = response.getEntity();
             byte[] bytes = EntityUtils.toByteArray(httpEntity);
-            genQrImg(bytes);
+            if(MainConfig.enableQrSever){
+                genQrImg(bytes);
+            }else {
+                String text=QRCodeUtils.decode(bytes);
+                String qrstr=QRCodeUtils.generateQR(text,1,1);
+                WxPaySupport.plugin.getLogger().info("\n"+qrstr);
+            }
             response.close();
             httpclient.close();
         }else {
