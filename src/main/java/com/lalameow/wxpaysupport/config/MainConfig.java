@@ -5,6 +5,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,7 +29,7 @@ public class MainConfig extends AbstractConfig{
     public static boolean enableModUi;
     public static String  czImgUrl;
     public static int     czbl;
-    public static String  czOkCmd;
+    public static List<String> czOkCmd;
     public static int qrshowType;
 
 
@@ -62,7 +63,7 @@ public class MainConfig extends AbstractConfig{
         enableModUi=this.getConfigFile().getBoolean("enableModUi");
         czImgUrl=this.getConfigFile().getString("czImgUrl");
         czbl=this.getConfigFile().getInt("czbl");
-        czOkCmd=this.getConfigFile().getString("czOkCmd");
+        czOkCmd=(List<String>)this.getConfigFile().getList("czOkCmd");
         qrshowType=this.getConfigFile().getInt("qrshowType");
     }
 }

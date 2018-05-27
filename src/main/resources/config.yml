@@ -28,4 +28,7 @@ czImgUrl: 'https://upload.cc/i1/2018/05/18/eyA8HF.png'
 #充值的点卷会舍弃小数点以后的，这个一定要注意
 czbl: 100
 #充值成功后执行的命令
-czOkCmd: 'say 感谢玩家%cz.playerName%的打赏%cz.money%软妹，获取了%cz.yxb%点卷，祝您游戏愉快'
+czOkCmd:
+  - 'say 感谢玩家%cz.playerName%的打赏%cz.money%软妹，获取了%cz.yxb%点卷，祝您游戏愉快'
+  - 'say 感谢玩家%cz.playerName%的打赏%cz.money%软妹，获取了%cz.yxb%点卷，祝您游戏愉快'
+  - 'say 感谢玩家%cz.playerName%的打赏%cz.money%软妹，获取了%cz.yxb%点卷，祝您游戏愉快'
