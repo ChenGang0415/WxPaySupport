@@ -18,6 +18,7 @@ import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.bukkit.ChatColor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -92,15 +93,17 @@ public class MoneyInfo implements WxHttpRequest {
         Document doc = Jsoup.parse(content);
         String money=doc.clone().select("line_content > topline > value > word").text();
         List<String> textList=doc.clone().select("line_content > lines > line > value > word").eachText();
+        List<String> keyList=doc.clone().select("line_content > lines > line > key > word").eachText();
         RechargeRecord rechargeRecord=new RechargeRecord();
         rechargeRecord.setMoney(Double.parseDouble(money.substring(1,money.length())));
         if(isZanShang){
-            if(textList.size()<3){
-                rechargeRecord.setDes(textList.get(1));
-            }else {
-                rechargeRecord.setPlayerName(textList.get(0));
-                rechargeRecord.setDes(textList.get(2));
+            int fkfindex=keyList.indexOf("付款方留言");
+            int len=textList.size();
+            if(fkfindex>=0){
+                rechargeRecord.setPlayerName(textList.get(fkfindex));
             }
+            rechargeRecord.setDes(textList.get(len-1));
+
         }else {
             if(textList.size()<3){
                 rechargeRecord.setDes(textList.get(0));
